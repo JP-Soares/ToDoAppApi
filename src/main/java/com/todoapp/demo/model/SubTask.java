@@ -7,17 +7,17 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Table(name="tasks")
-public class Task {
+@Table(name = "sub_tasks")
+public class SubTask {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "name", nullable = false, length = 120)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "color", nullable = true, length = 50)
+    @Column(name = "color", nullable = true)
     private String color;
 
     @Column(name = "start_date", nullable = true)
@@ -33,10 +33,6 @@ public class Task {
     private Time finishTime;
 
     @ManyToOne
-    @JoinColumn(name = "id_user", nullable = false)
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "id_status", nullable = false)
-    private Status status;
+    @JoinColumn(name = "id_task", nullable = false)
+    private Task task;
 }
