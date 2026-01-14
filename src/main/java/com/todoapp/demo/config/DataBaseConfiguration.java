@@ -16,7 +16,7 @@ public class DataBaseConfiguration {
     String username;
     @Value("${spring.datasource.password}")
     String password;
-    @Value("${spring.datasource.driver}")
+    @Value("${spring.datasource.driverClassName}")
     String driver;
 
     @Bean
