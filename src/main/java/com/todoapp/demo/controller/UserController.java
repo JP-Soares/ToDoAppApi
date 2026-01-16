@@ -4,6 +4,7 @@ import com.todoapp.demo.dto.UserDTO;
 import com.todoapp.demo.mapper.UserMapper;
 import com.todoapp.demo.model.User;
 import com.todoapp.demo.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,9 +20,15 @@ public class UserController implements GenericController{
     private final UserMapper mapper;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody UserDTO dto){
+    public ResponseEntity<Object> save(@RequestBody @Valid UserDTO dto){
         User user = mapper.toEntity(dto);
+//        User user = new User();
+//        user.setName("name");
+//        user.setLogin("login");
+//        user.setPassword("senha");
         service.save(user);
+
+        System.out.println("DTO: "+dto);
 
         var url = generateHeaderLocation(user.getId());
         return ResponseEntity.created(url).build();
