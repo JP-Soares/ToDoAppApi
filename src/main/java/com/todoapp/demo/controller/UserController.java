@@ -22,10 +22,6 @@ public class UserController implements GenericController{
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid UserDTO dto){
         User user = mapper.toEntity(dto);
-//        User user = new User();
-//        user.setName("name");
-//        user.setLogin("login");
-//        user.setPassword("senha");
         service.save(user);
 
         System.out.println("DTO: "+dto);
