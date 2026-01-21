@@ -22,7 +22,7 @@ public class StatusController {
     @PostMapping
     public ResponseEntity<Object> save (@RequestBody StatusDTO dto){
         Status status = mapper.toEntity(dto);
-        service.save(status);
+        service.save(status, dto.user());
 
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body("Success!");
     }

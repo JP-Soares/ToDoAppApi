@@ -1,11 +1,16 @@
 package com.todoapp.demo.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "status")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Status {
     @Id
     @Column
