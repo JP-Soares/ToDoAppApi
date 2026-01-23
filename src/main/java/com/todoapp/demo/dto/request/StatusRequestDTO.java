@@ -1,8 +1,8 @@
-package com.todoapp.demo.dto;
+package com.todoapp.demo.dto.request;
 
 import java.util.UUID;
 
-public record StatusDTO(
+public record StatusRequestDTO(
         String name,
         String color,
         UUID user

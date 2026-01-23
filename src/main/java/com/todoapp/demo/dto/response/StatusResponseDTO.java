@@ -1,4 +1,8 @@
 package com.todoapp.demo.dto.response;
 
-public class StatusResponseDTO {
+public record StatusResponseDTO (
+        String id,
+        String name,
+        String color
+){
 }

@@ -7,6 +7,7 @@ import com.todoapp.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,5 +21,16 @@ public class StatusService {
 
         status.setUser(user);
         return repository.save(status);
+    }
+
+    public Optional<Status> getById(UUID id){
+        return repository.findById(id);
+    }
+
+    public void update(Status status){
+        if(status.getId() == null){
+            throw new IllegalArgumentException("The status should be register in database");
+        }
+        repository.save(status);
     }
 }

@@ -1,6 +1,6 @@
-package com.todoapp.demo.dto;
+package com.todoapp.demo.dto.request;
 
-public record UserDTO (
+public record UserRequestDTO(
         String login,
         String password,
         String name
