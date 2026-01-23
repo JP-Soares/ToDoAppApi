@@ -53,9 +53,12 @@ public class StatusController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> getAll(){
+    public ResponseEntity<List<StatusResponseDTO>> getAll(){
         List<Status> statusList= service.getAll();
-        return ResponseEntity.ok(statusList);
+        List<StatusResponseDTO> statusResponseDTOList = statusList.stream()
+                .map(mapper::toResponseDTO)
+                .toList();
+        return ResponseEntity.ok(statusResponseDTOList);
     }
 
     @DeleteMapping("{id}")
