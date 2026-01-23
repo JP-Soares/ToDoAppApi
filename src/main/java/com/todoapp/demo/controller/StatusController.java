@@ -1,6 +1,7 @@
 package com.todoapp.demo.controller;
 
 import com.todoapp.demo.dto.request.StatusRequestDTO;
+import com.todoapp.demo.dto.request.StatusRequestUpdateDTO;
 import com.todoapp.demo.dto.response.StatusResponseDTO;
 import com.todoapp.demo.mapper.StatusMapper;
 import com.todoapp.demo.model.Status;
@@ -29,14 +30,12 @@ public class StatusController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Object> update(@PathVariable("id") String id, @RequestBody StatusRequestDTO dto){
+    public ResponseEntity<Object> update(@PathVariable("id") String id, @RequestBody StatusRequestUpdateDTO dto){
         return service.getById(UUID.fromString(id))
                 .map(status -> {
-                        Status statusAux = mapper.toEntity(dto);
+                        Status statusAux = mapper.requestUpdateToEntity(dto);
                         status.setName(statusAux.getName());
                         status.setColor(statusAux.getColor());
-                        status.setUser(statusAux.getUser());
-                        System.out.println(statusAux);
                         service.update(status);
                         return ResponseEntity.noContent().build();
                     }
