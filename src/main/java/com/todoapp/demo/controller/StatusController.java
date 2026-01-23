@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -49,6 +50,22 @@ public class StatusController {
                     var dto = mapper.toResponseDTO(status);
                     return ResponseEntity.ok(dto);
                 }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    public ResponseEntity<Object> getAll(){
+        List<Status> statusList= service.getAll();
+        return ResponseEntity.ok(statusList);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deleteById(@PathVariable("id") String id){
+        try{
+            service.delete(UUID.fromString(id));
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

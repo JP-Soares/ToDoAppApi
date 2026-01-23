@@ -4,9 +4,12 @@ import com.todoapp.demo.model.Status;
 import com.todoapp.demo.model.User;
 import com.todoapp.demo.repository.StatusRepository;
 import com.todoapp.demo.repository.UserRepository;
+import com.todoapp.demo.validator.StatusValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,6 +18,7 @@ import java.util.UUID;
 public class StatusService {
     private final StatusRepository repository;
     private final UserRepository userRepository;
+    private StatusValidator validator;
 
     public Status save (Status status, UUID userId){
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found!"));
@@ -27,10 +31,23 @@ public class StatusService {
         return repository.findById(id);
     }
 
+    public List<Status> getAll(){
+        List<Status> statusList = repository.findAll();
+        return statusList;
+    }
+
     public void update(Status status){
-        if(status.getId() == null){
-            throw new IllegalArgumentException("The status should be register in database");
-        }
+        validator.exists(status.getId());
         repository.save(status);
+    }
+
+    public void delete(UUID id){
+        try{
+            validator.exists(id);//verify if the status exists
+            var status = repository.getById(id);//get the status
+            repository.delete(status);//delete the status
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalStateException("There are tasks associated with this status.");
+        }
     }
 }
