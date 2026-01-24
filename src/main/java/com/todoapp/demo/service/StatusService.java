@@ -18,7 +18,7 @@ import java.util.UUID;
 public class StatusService {
     private final StatusRepository repository;
     private final UserRepository userRepository;
-    private StatusValidator validator;
+    private final StatusValidator validator;
 
     public Status save (Status status, UUID userId){
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found!"));

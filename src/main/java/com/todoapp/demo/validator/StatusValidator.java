@@ -1,6 +1,5 @@
 package com.todoapp.demo.validator;
 
-import com.todoapp.demo.model.Status;
 import com.todoapp.demo.repository.StatusRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
