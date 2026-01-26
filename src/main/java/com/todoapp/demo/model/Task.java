@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Entity
@@ -33,10 +33,10 @@ public class Task {
     private LocalDate finishDate;
 
     @Column(name = "start_time", nullable = true)
-    private Time startTime;
+    private LocalTime startTime;
 
     @Column(name = "finish_time", nullable = true)
-    private Time finishTime;
+    private LocalTime finishTime;
 
     @ManyToOne
     @JoinColumn(name = "id_user", nullable = false)

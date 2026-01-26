@@ -2,21 +2,22 @@ package com.todoapp.demo.dto.request;
 
 import jakarta.annotation.Nullable;
 
-import java.sql.Time;
+
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 public record TaskRequestPostDTO (
         String name,
         String color,
         @Nullable
-        LocalDate start_date,
+        LocalDate startDate,
         @Nullable
-        LocalDate finish_date,
+        LocalDate finishDate,
         @Nullable
-        Time stat_time,
+        LocalTime startTime,
         @Nullable
-        Time finish_time,
+        LocalTime finishTime,
         UUID user,
         UUID status
 ){
