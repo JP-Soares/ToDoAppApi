@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -35,5 +36,14 @@ public class TaskController {
         TaskResponseDTO dto = mapper.entityToResponseDTO(task);
 
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TaskResponseDTO>> getAll(){
+        List<Task> taskList = service.getAll();
+        List<TaskResponseDTO> taskResponseDTOList = taskList.stream()
+                .map(mapper::entityToResponseDTO).
+                toList();
+        return ResponseEntity.ok(taskResponseDTOList);
     }
 }

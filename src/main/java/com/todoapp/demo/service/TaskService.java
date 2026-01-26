@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,5 +32,10 @@ public class TaskService {
     public Optional<Task> getById(UUID id){
         validator.exists(id);
         return repository.findById(id);
+    }
+
+    public List<Task> getAll(){
+        List<Task> taskList = repository.findAll();
+        return taskList;
     }
 }
