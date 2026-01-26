@@ -38,4 +38,9 @@ public class TaskService {
         List<Task> taskList = repository.findAll();
         return taskList;
     }
+
+    public void update(Task task){
+        validator.exists(task.getId());
+        repository.save(task);
+    }
 }

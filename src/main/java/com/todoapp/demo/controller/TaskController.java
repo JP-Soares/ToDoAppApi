@@ -1,9 +1,13 @@
 package com.todoapp.demo.controller;
 
 import com.todoapp.demo.dto.request.TaskRequestPostDTO;
+import com.todoapp.demo.dto.request.TaskRequestUpdateDTO;
 import com.todoapp.demo.dto.response.TaskResponseDTO;
+import com.todoapp.demo.exceptions.NotFound;
 import com.todoapp.demo.mapper.TaskMapper;
+import com.todoapp.demo.model.Status;
 import com.todoapp.demo.model.Task;
+import com.todoapp.demo.service.StatusService;
 import com.todoapp.demo.service.TaskService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +25,7 @@ public class TaskController {
 
     private final TaskService service;
     private final TaskMapper mapper;
+    private final StatusService statusService;
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody TaskRequestPostDTO dto){
@@ -45,5 +50,32 @@ public class TaskController {
                 .map(mapper::entityToResponseDTO).
                 toList();
         return ResponseEntity.ok(taskResponseDTOList);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Object> update(@PathVariable("id") String id, @RequestBody TaskRequestUpdateDTO dto){
+        try{
+            return service.getById(UUID.fromString(id)).map(
+                    task -> {
+                        Task taskAux = mapper.requestUpdateToEntity(dto);
+                        task.setName(dto.name());
+                        task.setColor(dto.color());
+                        task.setStartDate(dto.startDate());
+                        task.setFinishDate(dto.finishDate());
+                        task.setStartTime(dto.startTime());
+                        task.setFinishTime(dto.finishTime());
+
+                        Status status = statusService.getById(dto.status()).
+                                orElseThrow(() -> new NotFound("Status not found!"));//get the status
+                        task.setStatus(status);//set the status
+
+                        service.update(task);
+                        return ResponseEntity.noContent().build();
+                    }
+            ).orElseGet(() -> ResponseEntity.notFound().build());
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

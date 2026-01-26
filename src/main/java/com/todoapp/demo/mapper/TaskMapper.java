@@ -1,6 +1,7 @@
 package com.todoapp.demo.mapper;
 
 import com.todoapp.demo.dto.request.TaskRequestPostDTO;
+import com.todoapp.demo.dto.request.TaskRequestUpdateDTO;
 import com.todoapp.demo.dto.response.TaskResponseDTO;
 import com.todoapp.demo.model.Task;
 import org.mapstruct.Mapper;
@@ -14,4 +15,8 @@ public interface TaskMapper {
     Task requestPostToEntity(TaskRequestPostDTO dto);
 
     TaskResponseDTO entityToResponseDTO(Task task);
+
+    @Mapping(target="user", ignore = true)
+    @Mapping(target="status", ignore = true)
+    Task requestUpdateToEntity(TaskRequestUpdateDTO dto);
 }
