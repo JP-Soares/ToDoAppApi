@@ -1,6 +1,9 @@
 package com.todoapp.demo.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.sql.Time;
 import java.time.LocalDate;
@@ -8,6 +11,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name="tasks")
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class Task {
     @Id
     @Column(name = "id", nullable = false)

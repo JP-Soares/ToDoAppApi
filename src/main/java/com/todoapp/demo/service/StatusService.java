@@ -17,11 +17,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class StatusService {
     private final StatusRepository repository;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final StatusValidator validator;
 
     public Status save (Status status, UUID userId){
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found!"));
+        User user = userService.getById(userId).orElseThrow(() -> new RuntimeException("User not found!"));
 
         status.setUser(user);
         return repository.save(status);
