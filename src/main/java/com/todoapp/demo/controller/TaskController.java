@@ -57,13 +57,21 @@ public class TaskController {
         try{
             return service.getById(UUID.fromString(id)).map(
                     task -> {
-                        Task taskAux = mapper.requestUpdateToEntity(dto);
                         task.setName(dto.name());
                         task.setColor(dto.color());
-                        task.setStartDate(dto.startDate());
-                        task.setFinishDate(dto.finishDate());
-                        task.setStartTime(dto.startTime());
-                        task.setFinishTime(dto.finishTime());
+
+                        if(dto.startDate() != null){
+                            task.setStartDate(dto.startDate());
+                        }
+                        if(dto.finishDate() != null){
+                            task.setFinishDate(dto.finishDate());
+                        }
+                        if(dto.startTime() != null){
+                            task.setStartTime(dto.startTime());
+                        }
+                        if(dto.finishTime() != null){
+                            task.setFinishTime(dto.finishTime());
+                        }
 
                         Status status = statusService.getById(dto.status()).
                                 orElseThrow(() -> new NotFound("Status not found!"));//get the status
