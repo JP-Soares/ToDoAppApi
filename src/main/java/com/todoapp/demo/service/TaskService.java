@@ -4,11 +4,15 @@ import com.todoapp.demo.model.Status;
 import com.todoapp.demo.model.Task;
 import com.todoapp.demo.model.User;
 import com.todoapp.demo.repository.TaskRepository;
+import com.todoapp.demo.repository.specs.TaskSpecs;
 import com.todoapp.demo.validator.TaskValidator;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -42,5 +46,33 @@ public class TaskService {
     public void update(Task task){
         validator.exists(task.getId());
         repository.save(task);
+    }
+
+    public List<Task> search(
+            String name,
+            LocalDate startDate,
+            LocalDate finishDate,
+            LocalTime startTime,
+            LocalTime finishTime
+    ){
+        Specification<Task> specs = Specification.allOf();
+        if(name != null){
+            specs = specs.and(TaskSpecs.nameLike(name));
+        }
+        if(startDate != null && finishDate != null){//get date period
+            specs = specs.and(TaskSpecs.datePeriod(startDate, finishDate));
+        }
+        if(startDate != null && finishDate == null){//get tasks with startDate
+            specs = specs.and(TaskSpecs.startDateEqual(startDate));
+        }
+
+        if(startTime != null && finishTime != null){//get time period
+            specs = specs.and(TaskSpecs.timePeriod(startTime, finishTime));
+        }
+        if(startTime != null && finishTime == null){//get tasks with startTime
+            specs = specs.and(TaskSpecs.startTimeEqual(startTime));
+        }
+
+        return repository.findAll(specs);
     }
 }

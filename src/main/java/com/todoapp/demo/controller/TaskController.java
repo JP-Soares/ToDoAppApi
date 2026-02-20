@@ -11,12 +11,16 @@ import com.todoapp.demo.service.StatusService;
 import com.todoapp.demo.service.TaskService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("task")
@@ -43,13 +47,30 @@ public class TaskController {
         return ResponseEntity.ok(dto);
     }
 
+//    @GetMapping
+//    public ResponseEntity<List<TaskResponseDTO>> getAll(){
+//        List<Task> taskList = service.getAll();
+//        List<TaskResponseDTO> taskResponseDTOList = taskList.stream()
+//                .map(mapper::entityToResponseDTO).
+//                toList();
+//        return ResponseEntity.ok(taskResponseDTOList);
+//    }
+
     @GetMapping
-    public ResponseEntity<List<TaskResponseDTO>> getAll(){
-        List<Task> taskList = service.getAll();
-        List<TaskResponseDTO> taskResponseDTOList = taskList.stream()
-                .map(mapper::entityToResponseDTO).
-                toList();
-        return ResponseEntity.ok(taskResponseDTOList);
+    public ResponseEntity<List<TaskResponseDTO>> search(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "startDate", required = false) LocalDate startDate,
+            @RequestParam(value = "finishDate", required = false) LocalDate finishDate,
+            @RequestParam(value = "startTime", required = false) LocalTime startTime,
+            @RequestParam(value = "finishTime", required = false) LocalTime finishTime
+            ){
+        List<Task> searchResult = service.search(name, startDate, finishDate, startTime, finishTime);
+        List<TaskResponseDTO> result = searchResult.
+                stream().
+                map(mapper::entityToResponseDTO).
+                collect(Collectors.toList());
+
+        return ResponseEntity.ok(result);
     }
 
     @PutMapping("{id}")
