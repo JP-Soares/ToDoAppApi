@@ -15,6 +15,6 @@ public interface StatusMapper {
     StatusResponseDTO toResponseDTO(Status status);
 
 
-    StatusRequestUpdateDTO toReRequestupdateDTO(Status status);
+    StatusRequestUpdateDTO toReRequestUpdateDTO(Status status);
     Status requestUpdateToEntity(StatusRequestUpdateDTO dto);
 }
