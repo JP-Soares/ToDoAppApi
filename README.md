@@ -1,25 +1,36 @@
-# ✅ ToDoApp API
+# 🚀 ToDoApp API
 
-REST API developed to support a **task management application (ToDoApp)**, allowing full control over tasks, subtasks, and their respective statuses.
+A robust and scalable **RESTful API** for task management, designed to handle tasks, subtasks, and their lifecycle statuses efficiently.
 
-This project is being developed using **Spring Boot**, **PostgreSQL** as the database, and **Docker** to simplify the development and execution environment.
-
----
-
-## 🚀 Features
-
-- 📌 Create and manage **task statuses**
-- 📝 Create and manage **tasks**
-- 🔁 Create and manage **subtasks** linked to tasks
-- 🔗 Relationships between tasks, subtasks, and statuses
-- 🌐 RESTful API following best practices
-- 🐳 Dockerized environment
+This project follows clean architecture principles and industry best practices, providing a solid foundation for building task-oriented applications.
 
 ---
 
-## 🛠️ Technologies Used
+## ✨ Features
 
-- **Java**
+- **Task Status Management**  
+  Create, update, and manage task statuses dynamically.
+
+- **Task Management**  
+  Perform full CRUD operations on tasks.
+
+- **Subtask Management**  
+  Handle subtasks associated with parent tasks.
+
+- **Entity Relationships**  
+  Structured relationships between tasks, subtasks, and statuses.
+
+- **RESTful API Design**  
+  Consistent and well-defined endpoints following REST standards.
+
+- **Containerized Environment**  
+  Simplified setup and execution using Docker.
+
+---
+
+## 🧱 Tech Stack
+
+- **Java 17+**
 - **Spring Boot**
   - Spring Web
   - Spring Data JPA
@@ -29,3 +40,38 @@ This project is being developed using **Spring Boot**, **PostgreSQL** as the dat
 
 ---
 
+## 🏗️ Architecture
+
+The application is structured using a layered architecture:
+
+- **Controller Layer**  
+  Responsible for handling HTTP requests and responses.
+
+- **Service Layer**  
+  Contains business logic and application rules.
+
+- **Repository Layer**  
+  Manages data persistence using JPA.
+
+- **Database Layer**  
+  PostgreSQL for reliable data storage.
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+
+- Java 17 or higher  
+- Maven  
+- Docker (optional)  
+- PostgreSQL (if running locally)
+
+---
+
+## 🐳 Running with Docker
+
+```bash
+git clone https://github.com/your-username/todoapp-api.git
+cd todoapp-api
+docker-compose up --build
